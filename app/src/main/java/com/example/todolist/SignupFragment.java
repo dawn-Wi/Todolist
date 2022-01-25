@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignupFragment extends Fragment {
-
+    MainViewModel mainViewModel;
     EditText signup_et_name;
     EditText signup_et_eamil;
     EditText signup_et_password;
@@ -27,7 +30,9 @@ public class SignupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        FirebaseDataSource ds = new FirebaseDataSource();
+        UserRepository.getInstance().setDataSource(ds);
     }
 
     @Override
@@ -110,6 +115,23 @@ public class SignupFragment extends Fragment {
                                 }
                             });
                     builder.show();
+                }
+                else{
+                    mainViewModel.tryRegister(signup_et_eamil.getText().toString(),signup_et_password.getText().toString(),signup_et_name.getText().toString());
+                }
+            }
+        });
+        mainViewModel.registerSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean registersuccessing) {
+                if(registersuccessing == true){
+                    NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(),"failed",Toast.LENGTH_SHORT).show();
+                    signup_et_eamil.setText(null);
+                    signup_et_password.setText(null);
+                    signup_et_name.setText(null);
                 }
             }
         });

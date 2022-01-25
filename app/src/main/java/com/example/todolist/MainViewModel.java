@@ -10,16 +10,17 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Boolean> loggedIn = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
+    private MutableLiveData<String> loggedname = new MutableLiveData<>();
 
-//    public void tryLogin(String id,String password){
-//        doingWork.setValue(true);
-//        userRepository.tryLogin(id,password,result -> {
-//            if(result.equals("Success")){
-//                loggedIn.setValue(true);
-//            }
-//            doingWork.setValue(false);
-//        });
-//    }
+    public void tryLogin(String id,String password){
+        doingWork.setValue(true);
+        userRepository.tryLogin(id,password,result -> {
+            if(result.equals("Success")){
+                loggedIn.setValue(true);
+            }
+            doingWork.setValue(false);
+        });
+    }
 
     public void tryRegister(String id, String password, String name){
         doingWork.setValue(true);
@@ -33,6 +34,8 @@ public class MainViewModel extends ViewModel {
            doingWork.setValue(false);
         });
     }
+    public LiveData<String> getName(){return loggedname;}
+    public void setName(String name){loggedname.setValue(name);}
 
     public LiveData<Boolean> getDoingWork(){return doingWork;}
     public LiveData<Boolean> isLoggedIn(){return loggedIn;}

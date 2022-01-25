@@ -15,6 +15,17 @@ public class UserRepository {
             }
         });
     }
+
+    public void tryLogin(final String id, final String password, final FirebaseDataSource.DataSourceCallback<String> callback){
+        firebaseDataSource.tryLogin(id, password, result -> {
+            if(result instanceof Result.Success){
+                callback.onComplete("Success");
+            }
+            else{
+                callback.onComplete(((Result.Error)result).getError().getMessage());
+            }
+        });
+    }
     public void setDataSource(FirebaseDataSource ds) {this.firebaseDataSource = ds;}
 
 }

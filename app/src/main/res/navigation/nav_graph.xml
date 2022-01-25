@@ -39,5 +39,14 @@
         android:id="@+id/calendarFragment"
         android:name="com.example.todolist.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.example.todolist.TodoFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo" />
 </navigation>

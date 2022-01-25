@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -21,7 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginFragment extends Fragment {
-
+    MainViewModel mainViewModel;
     EditText login_et_email;
     EditText login_et_password;
     Button login_bt_login;
@@ -30,7 +32,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        FirebaseDataSource ds = new FirebaseDataSource();
+        UserRepository.getInstance().setDataSource(ds);
     }
 
     @Override
@@ -46,6 +50,36 @@ public class LoginFragment extends Fragment {
         login_et_password= view.findViewById(R.id.login_et_password);
         login_bt_login = view.findViewById(R.id.login_bt_login);
         login_bt_signup = view.findViewById(R.id.login_bt_signup);
+
+        mainViewModel.getDoingWork().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isWorking) {
+                if(isWorking==true){
+                    login_et_email.setEnabled(false);
+                    login_et_password.setEnabled(false);
+                    login_bt_login.setEnabled(false);
+                    login_bt_signup.setEnabled(false);
+                }
+                else{
+                    login_et_email.setEnabled(true);
+                    login_et_password.setEnabled(true);
+                    login_bt_login.setEnabled(true);
+                    login_bt_signup.setEnabled(true);
+                    login_et_email.setText(null);
+                    login_et_password.setText(null);
+                }
+            }
+        });
+
+        mainViewModel.isLoggedIn().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoggedIn) {
+                if(isLoggedIn==true){
+                    NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_calendarFragment);
+                    mainViewModel.setName(login_et_email.getText().toString());
+                }
+            }
+        });
 
         login_bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +131,9 @@ public class LoginFragment extends Fragment {
                                 }
                             });
                     builder.show();
+                }
+                else{
+                    mainViewModel.tryLogin(login_et_email.getText().toString(),login_et_password.getText().toString());
                 }
             }
         });

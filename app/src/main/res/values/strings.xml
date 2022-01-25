@@ -5,4 +5,5 @@
     <string name="NAME">NAME HERE</string>
     <string name="ID">ID HERE</string>
     <string name="PASSWORD">PASSWORD HERE</string>
+    <string name="TODO">To Do List HERE</string>
 </resources>

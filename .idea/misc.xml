@@ -4,9 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_calendar.xml" value="0.176" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_listmain.xml" value="0.24592391304347827" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_login.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_signup.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_splash.xml" value="0.25226449275362317" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_todo.xml" value="0.24592391304347827" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/todo_item.xml" value="0.24592391304347827" />
       </map>
     </option>
   </component>

@@ -1,5 +1,7 @@
 package com.example.todolist;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -9,7 +11,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class FirebaseDataSource {
@@ -60,21 +65,34 @@ public class FirebaseDataSource {
                     }
                 });
 
+    }
 
-//    public void tryLogin(String id, String password, DataSourceCallback<Result> callback) {
-//        db.collection("users")
-//                .document(id)
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if(task.isSuccessful()){
-////                        if(task.getResult()!=null){
-////                            callback.onComplete(new Result.Success<String>("Success"));
-////                        }
-////                        else{
-////                            callback.onComplete(new Result.Error(task.getException()));
-////                        }
-//                    }
-//                });
+    public void sendTodoText(String date,String name,String text, DataSourceCallback<Result> callback){
+       HashMap<String,String> map = new HashMap<>();
+       map.put("Todo", text);
+       map.put("UserId", name);
+       db.collection(date)
+               .add(map);
+    }
+
+    public void getTodoText(String date, DataSourceCallback<Result> callback){
+        List<Todo> toReturn = new ArrayList<>();
+        db.collection(date)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        for(int i=0;i<snaps.size();i++){
+                            Todo toAdd = new Todo((snaps.get(i).getString("todo")), snaps.get(i).getString("userId"));
+                            toReturn.add(toAdd);
+                        }
+                        Log.d("datasource", "onSuccess: firestore finish");
+                        callback.onComplete(new Result.Success<List<Todo>>(toReturn));
+                    }else {
+                        Log.d("datasource", "onSuccess: firestore not finish");
+                        callback.onComplete(new Result.Error(task.getException()));
+                    }
+                });
     }
 
     public interface DataSourceCallback<T>{

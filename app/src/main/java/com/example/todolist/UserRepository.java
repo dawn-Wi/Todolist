@@ -1,5 +1,7 @@
 package com.example.todolist;
 
+import android.util.Log;
+
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
     public static UserRepository getInstance(){return INSTANCE;}
@@ -26,6 +28,31 @@ public class UserRepository {
             }
         });
     }
+
+    public void sendTodoText(final String date,final String name,final String text, final FirebaseDataSource.DataSourceCallback<String> callback){
+        firebaseDataSource.sendTodoText(date, name,text, result->{
+            if(result instanceof Result.Success){
+                callback.onComplete("Success");
+                Log.d("repository", "sendTodoText Success");
+            }
+            else{
+                callback.onComplete(((Result.Error) result).getError().getMessage());
+                Log.d("repository", "sendTodoText Failed");
+            }
+        });
+    }
+
+    public void getTodoText(final String date, final UserRepositoryCallback callback){
+        firebaseDataSource.getTodoText(date, result -> {
+            if(result instanceof Result.Success){
+                callback.onComplete(result);
+            }
+        });
+    }
+
     public void setDataSource(FirebaseDataSource ds) {this.firebaseDataSource = ds;}
 
+    public interface UserRepositoryCallback<T>{
+        void onComplete(Result result);
+    }
 }

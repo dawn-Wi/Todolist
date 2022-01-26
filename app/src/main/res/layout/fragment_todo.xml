@@ -1,44 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout5"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/todo_fl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TodoFragment" >
+    tools:context=".TodoFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <EditText
+        android:id="@+id/todomain_et_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="15"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        tools:ignore="MissingConstraints" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/todo_et_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="15"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:hint="@string/TODO"/>
-
-            <Button
-                android:id="@+id/todo_bt_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="save" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-    </LinearLayout>
+    <Button
+        android:id="@+id/todomain_bt_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/todomain_et_text"
+        android:text="save"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

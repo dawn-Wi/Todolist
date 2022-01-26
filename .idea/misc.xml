@@ -5,11 +5,17 @@
       <map>
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_calendar.xml" value="0.176" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_item_list.xml" value="0.2" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_listmain.xml" value="0.24592391304347827" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_login.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_signup.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_splash.xml" value="0.25226449275362317" />
-        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_todo.xml" value="0.24592391304347827" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_todo.xml" value="0.152" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_todo2.xml" value="0.1296875" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_todo_list.xml" value="0.264" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/fragment_todolist.xml" value="0.12864583333333332" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/object_todo.xml" value="0.264" />
+        <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/object_todolist.xml" value="0.2" />
         <entry key="..\:/Users/GaussLab/AndroidStudioProjects/Todolist/app/src/main/res/layout/todo_item.xml" value="0.24592391304347827" />
       </map>
     </option>

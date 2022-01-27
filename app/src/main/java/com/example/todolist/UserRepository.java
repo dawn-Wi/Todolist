@@ -42,10 +42,23 @@ public class UserRepository {
         });
     }
 
-    public void getTodoText(final String date, final UserRepositoryCallback callback){
-        firebaseDataSource.getTodoText(date, result -> {
+    public void getTodoList(final String date, final UserRepositoryCallback callback){
+        firebaseDataSource.getTodoList(date, result -> {
             if(result instanceof Result.Success){
                 callback.onComplete(result);
+            }
+        });
+    }
+
+    public void deleteTodoText(final String date, final String text, final FirebaseDataSource.DataSourceCallback<String> callback){
+        firebaseDataSource.deleteTodoText(date, text, result -> {
+            if(result instanceof Result.Success){
+                callback.onComplete("Success");
+                Log.d("repository", "deleteTodoText Success");
+            }
+            else {
+                callback.onComplete(((Result.Error) result).getError().getMessage());
+                Log.d("repository", "deleteTodoText Failed");
             }
         });
     }

@@ -4,7 +4,7 @@ public class Todo {
     String userId;
     String todo;
 
-    public Todo(String userId, String todo){
+    public Todo(String todo, String userId){
         this.userId = userId;
         this.todo = todo;
     }

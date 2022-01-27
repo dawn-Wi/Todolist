@@ -3,7 +3,9 @@ package com.example.todolist;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.todolist.placeholder.PlaceholderContent;
+import android.widget.Button;
 
 import java.util.List;
 
 public class TodoListFragment extends Fragment {
+    MainViewModel mainViewModel;
+    Button todo_bt_delete;
+    String date;
+    String text;
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -42,6 +47,7 @@ public class TodoListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -61,7 +67,35 @@ public class TodoListFragment extends Fragment {
             MytodoRecyclerViewAdapter adapter = new MytodoRecyclerViewAdapter(todoList, new ViewModelProvider(requireActivity()).get(MainViewModel.class));
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
+            mainViewModel.isListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isChanged) {
+                    if(isChanged) {
+                        adapter.setTodoList(mainViewModel.getTodoList());
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
         }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        todo_bt_delete = view.findViewById(R.id.todo_bt_delete);
+
+
+
+        mainViewModel.getWriteText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String gettext) {
+                text = gettext;
+            }
+        });
+
+
+
+
     }
 }

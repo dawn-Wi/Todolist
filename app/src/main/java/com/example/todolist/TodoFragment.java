@@ -54,14 +54,7 @@ public class TodoFragment extends Fragment {
         myFrame = view.findViewById(R.id.todo_fl);
         todoList = mainViewModel.getTodoList();
 
-        mainViewModel.getDate().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String choosedate) {
-                if(choosedate !=null){
-                    calendardate=choosedate;
-                }
-            }
-        });
+
         mainViewModel.getName().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String sendname) {
@@ -74,7 +67,8 @@ public class TodoFragment extends Fragment {
         todomain_bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainViewModel.sendTodoText(calendardate, username, todomain_et_text.getText().toString());
+                mainViewModel.sendTodoText(mainViewModel.getDate(), username, todomain_et_text.getText().toString());
+                mainViewModel.setWriteText(todomain_et_text.getText().toString());
                 todomain_et_text.setText(null);
             }
         });

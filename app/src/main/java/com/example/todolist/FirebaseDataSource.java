@@ -72,10 +72,12 @@ public class FirebaseDataSource {
        map.put("Todo", text);
        map.put("UserId", name);
        db.collection(date)
-               .add(map);
+               .document(text)
+               .set(map);
+       callback.onComplete(new Result.Success("Success"));
     }
 
-    public void getTodoText(String date, DataSourceCallback<Result> callback){
+    public void getTodoList(String date, DataSourceCallback<Result> callback){
         List<Todo> toReturn = new ArrayList<>();
         db.collection(date)
                 .get()
@@ -83,8 +85,9 @@ public class FirebaseDataSource {
                     if(task.isSuccessful()){
                         List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                         for(int i=0;i<snaps.size();i++){
-                            Todo toAdd = new Todo((snaps.get(i).getString("todo")), snaps.get(i).getString("userId"));
+                            Todo toAdd = new Todo((snaps.get(i).getString("Todo")), snaps.get(i).getString("UserId"));
                             toReturn.add(toAdd);
+                            Log.d("정보가지고오는거ㅓㅓㅓ", "getTodoText: "+toAdd);
                         }
                         Log.d("datasource", "onSuccess: firestore finish");
                         callback.onComplete(new Result.Success<List<Todo>>(toReturn));
@@ -93,6 +96,24 @@ public class FirebaseDataSource {
                         callback.onComplete(new Result.Error(task.getException()));
                     }
                 });
+    }
+
+    public void deleteTodoText(String date,String text, DataSourceCallback<Result> callback){
+       db.collection(date)
+               .document(text)
+               .delete()
+               .addOnSuccessListener(new OnSuccessListener<Void>() {
+                   @Override
+                   public void onSuccess(Void unused) {
+                       callback.onComplete(new Result.Success<String>("Success"));
+                   }
+               })
+               .addOnFailureListener(new OnFailureListener() {
+                   @Override
+                   public void onFailure(@NonNull Exception e) {
+                       callback.onComplete(new Result.Error(new Exception("Failed")));
+                   }
+               });
     }
 
     public interface DataSourceCallback<T>{

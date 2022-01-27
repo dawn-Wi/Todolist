@@ -1,16 +1,12 @@
 package com.example.todolist;
 
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
@@ -20,8 +16,12 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
     private MutableLiveData<Boolean> sendTodoTextSuccess = new MutableLiveData<>();
     private MutableLiveData<String> loggedname = new MutableLiveData<>();
-    private MutableLiveData<String> choosedate = new MutableLiveData<>();
-    private MutableLiveData<Boolean> receivedate = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> listChanged = new MutableLiveData<>();
+    private MutableLiveData<Boolean> listLoaded = new MutableLiveData<>(false);
+    private MutableLiveData<String> writeText = new MutableLiveData<>();
+    private String selectedDate;
+    //private String
+
     private List<Todo> todoList;
 
     public void tryLogin(String id,String password){
@@ -52,6 +52,7 @@ public class MainViewModel extends ViewModel {
             if(result.equals("Success")){
                 sendTodoTextSuccess.postValue(true);
                 Log.d("DEBUG", "sendTodoText Success");
+                loadTodoList(date);
             }
             else{
                 sendTodoTextSuccess.postValue(false);
@@ -60,30 +61,45 @@ public class MainViewModel extends ViewModel {
         });
     }
 
-    public void getTodoText(String date){
-        userRepository.getTodoText(date, result->{
+    public void loadTodoList(String date){
+        userRepository.getTodoList(date, result->{
             if(result instanceof Result.Success){
-                receivedate.setValue(true);
                 todoList = ((Result.Success<List<Todo>>)result).getData();
+                listLoaded.setValue(true);
             }
             else{
-                receivedate.setValue(false);
+                listLoaded.setValue(false);
             }
         });
     }
 
-
-    public LiveData<String> getName(){
-        return loggedname;
+    public void deleteTodoText(String date, String text){
+        userRepository.deleteTodoText(date, text, result -> {
+            if(result.equals("Success")){
+                Log.d("DEBUG", "deleteTodoText Success");
+                loadTodoList(date);
+            }
+            else {
+                Log.d("DEBUG", "deleteTodoText Failed");
+            }
+        });
     }
+
+    public LiveData<String> getName(){ return loggedname; }
 
     public void setName(String name){
         loggedname.setValue(name);
     }
 
-    public LiveData<String> getDate() {return choosedate;}
+    public String getDate() {return selectedDate;}
 
-    public void setDate(String date) {choosedate.setValue(date);}
+    public void setDate(String date) {selectedDate=date;}
+
+    public LiveData<String> getWriteText() {return writeText;}
+
+    public void setWriteText(String text) {writeText.setValue(text);}
+
+    public LiveData<Boolean> isListChanged() { return listChanged;}
 
     public List<Todo> getTodoList(){return todoList;}
 
@@ -95,7 +111,7 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Boolean> sendTodoTextSuccess() {return sendTodoTextSuccess;}
 
-    public LiveData<Boolean> receivingdate(){return receivedate;}
+    public LiveData<Boolean> isListLoaded(){return listLoaded;}
 
 
 }

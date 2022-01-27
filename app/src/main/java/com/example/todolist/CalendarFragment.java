@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class CalendarFragment extends Fragment {
@@ -61,12 +59,12 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayofMonth) {
                 String date = year+"."+(month+1)+"."+dayofMonth;
-                mainViewModel.setDate(date);
-                mainViewModel.getTodoText(date);
                 Log.d("asdf", "onSelectedDayChange: "+date);
+                mainViewModel.setDate(date);
+                mainViewModel.loadTodoList(date);
             }
         });
-        mainViewModel.receivingdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        mainViewModel.isListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean receiveddate) {
                 if(receiveddate==true){

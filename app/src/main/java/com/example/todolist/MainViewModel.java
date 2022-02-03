@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.todolist.todo.Todo;
+
 import java.util.List;
 
 public class MainViewModel extends ViewModel {

@@ -5,7 +5,7 @@
     android:id="@+id/todo_fl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TodoFragment">
+    tools:context=".todo.TodoFragment">
 
     <EditText
         android:id="@+id/todomain_et_text"

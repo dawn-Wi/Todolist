@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.todolist.login;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,10 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Objects;
+import com.example.todolist.FirebaseDataSource;
+import com.example.todolist.MainViewModel;
+import com.example.todolist.R;
+import com.example.todolist.UserRepository;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +54,7 @@ public class LoginFragment extends Fragment {
         login_bt_login = view.findViewById(R.id.login_bt_login);
         login_bt_signup = view.findViewById(R.id.login_bt_signup);
 
+        //getDoingWork 옵저버, 돌아가는 중(true)이면 안써지게, 안돌아가면(false) 써지게
         mainViewModel.getDoingWork().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isWorking) {
@@ -71,6 +75,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //isLoggedIn 옵저버,로그인이 true이면 화면이동, 유저ID를 MainViewModel의 setName에 저장
         mainViewModel.isLoggedIn().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoggedIn) {
@@ -81,6 +86,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //login_bt_login버튼을 누르면
         login_bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,14 +139,17 @@ public class LoginFragment extends Fragment {
                     builder.show();
                 }
                 else{
+                    //ID, Password 다 형식대로 쓰면 tryLogin 시작해봐, ID랑 Password넘겨줘서
                     mainViewModel.tryLogin(login_et_email.getText().toString(),login_et_password.getText().toString());
                 }
             }
         });
 
+        //login_bt_signup버튼 누르면
         login_bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //회원가입창으로 넘어가
                 NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_signupFragment);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.todolist.login;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.todolist.FirebaseDataSource;
+import com.example.todolist.MainViewModel;
+import com.example.todolist.R;
+import com.example.todolist.UserRepository;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +54,7 @@ public class SignupFragment extends Fragment {
         signup_et_password = view.findViewById(R.id.signup_et_password);
         signup_bt_go = view.findViewById(R.id.signup_bt_go);
 
+        //다쓰고 signup_bt_go버튼 누르면 ID랑 Password 형식 맞는지 확인해봐
         signup_bt_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,10 +123,13 @@ public class SignupFragment extends Fragment {
                     builder.show();
                 }
                 else{
+                    //다 완벽하면 tryRegister에 ID랑 Password랑 Name 넘겨서 시도해봐
                     mainViewModel.tryRegister(signup_et_eamil.getText().toString(),signup_et_password.getText().toString(),signup_et_name.getText().toString());
                 }
             }
         });
+
+        //registerSuccess옵저버, 성공하면 로그인 화면으로, 실패하면 빈칸으로 만들어
         mainViewModel.registerSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean registersuccessing) {

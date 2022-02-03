@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.todolist.todo;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.todolist.MainViewModel;
+import com.example.todolist.R;
 
 import java.util.List;
 

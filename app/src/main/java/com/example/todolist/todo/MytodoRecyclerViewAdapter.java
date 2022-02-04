@@ -1,10 +1,15 @@
 package com.example.todolist.todo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +38,31 @@ public class MytodoRecyclerViewAdapter extends RecyclerView.Adapter<MytodoRecycl
 //        holder.todo_cb_checkbox.setText(todoList.get(position).get_id());
         holder.todo_tv_name.setText(todoList.get(position).getUserId());
         holder.todo_tv_todo.setText(todoList.get(position).getTodo());
+        holder.todo_cb_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(((CheckBox)view).isChecked()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("너 이거 누름");
+                    builder.setMessage("삭제할까 말까");
+                    builder.setPositiveButton("ㅇㅇ삭제해",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mainViewModel.deleteTodoText(mainViewModel.getDate(), holder.todo_tv_todo.getText().toString());
+                                }
+                            });
+                    builder.setNegativeButton("ㄴㄴ하지마",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    builder.show();
+                }
+            }
+        });
         holder.todo_bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +81,7 @@ public class MytodoRecyclerViewAdapter extends RecyclerView.Adapter<MytodoRecycl
         public final TextView todo_tv_name;
         public final TextView todo_tv_todo;
         public final Button todo_bt_delete;
+        public final CheckBox todo_cb_checkbox;
 
         public ViewHolder(ObjectTodoBinding binding) {
             super(binding.getRoot());
@@ -58,6 +89,7 @@ public class MytodoRecyclerViewAdapter extends RecyclerView.Adapter<MytodoRecycl
             todo_tv_name = binding.todoTvName;
             todo_tv_todo = binding.todoTvTodo;
             todo_bt_delete = binding.todoBtDelete;
+            todo_cb_checkbox = binding.todoCbCheckbox;
         }
 
         @Override

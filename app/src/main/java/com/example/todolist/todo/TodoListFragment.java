@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.example.todolist.MainViewModel;
 import com.example.todolist.R;
@@ -24,8 +26,6 @@ import java.util.List;
 
 public class TodoListFragment extends Fragment {
     MainViewModel mainViewModel;
-    Button todo_bt_delete;
-    String date;
     String text;
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -88,9 +88,6 @@ public class TodoListFragment extends Fragment {
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        todo_bt_delete = view.findViewById(R.id.todo_bt_delete);
-
-
 
         mainViewModel.getWriteText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -98,7 +95,6 @@ public class TodoListFragment extends Fragment {
                 text = gettext;
             }
         });
-
 
 
 

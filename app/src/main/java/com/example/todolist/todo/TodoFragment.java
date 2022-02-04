@@ -57,7 +57,7 @@ public class TodoFragment extends Fragment {
         myFrame = view.findViewById(R.id.todo_fl);
         todoList = mainViewModel.getTodoList();
 
-
+        //getName 옵저버, 제대로 가져왔으면 username에 저장
         mainViewModel.getName().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String sendname) {
@@ -67,16 +67,16 @@ public class TodoFragment extends Fragment {
             }
         });
 
+        //save버튼 클릭시, 날짜, SendTodoText(날짜, 쓰여진 문구)실행, setWriteText(쓰여진 문구) 실행, 텍스트칸 빈칸으로
         todomain_bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mainViewModel.sendTodoText(mainViewModel.getDate(), username, todomain_et_text.getText().toString());
                 mainViewModel.setWriteText(todomain_et_text.getText().toString());
-                todomain_et_text.setText(null);
             }
         });
 
-        //뭔가 안돌아가는중인듯?
+        //sendTodoTextSuccess 옵저버, 제대로 보내졌으면 빈칸으로 만들고 토스트 띄우기
         mainViewModel.sendTodoTextSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean sendtodotextsuccessing) {
@@ -91,10 +91,14 @@ public class TodoFragment extends Fragment {
             }
         });
 
+        //프레그먼트 매니저,
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = TodoListFragment.newInstance(1,todoList);
+        //프래그먼트 트랜잭션 초기화
         FragmentTransaction transaction = fm.beginTransaction();
+        //전달받은 fragment를 replace
         transaction.replace(myFrame.getId(), myFrag);
+        //transaction 마무리
         transaction.commit();
     }
 }

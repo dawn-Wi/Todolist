@@ -70,6 +70,8 @@ public class TodoListFragment extends Fragment {
             MytodoRecyclerViewAdapter adapter = new MytodoRecyclerViewAdapter(todoList, new ViewModelProvider(requireActivity()).get(MainViewModel.class));
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
+
+            //isListLoaded 옵저버, true시 어댑터를 통해 setTodoList(리스트 내용)실행, 어댑터한테 recyclerView 리스트 업데이트 다시그려
             mainViewModel.isListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                 @Override
                 public void onChanged(Boolean isChanged) {

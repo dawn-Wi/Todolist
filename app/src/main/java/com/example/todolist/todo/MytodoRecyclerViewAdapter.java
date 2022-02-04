@@ -36,7 +36,6 @@ public class MytodoRecyclerViewAdapter extends RecyclerView.Adapter<MytodoRecycl
         holder.todo_bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mainViewModel.getDate();
                 mainViewModel.deleteTodoText(mainViewModel.getDate(), holder.todo_tv_todo.getText().toString());
             }
         });

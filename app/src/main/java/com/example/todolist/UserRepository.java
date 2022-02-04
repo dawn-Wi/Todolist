@@ -7,6 +7,7 @@ public class UserRepository {
     public static UserRepository getInstance(){return INSTANCE;}
     private FirebaseDataSource firebaseDataSource;
 
+    //회원가입 시도 - 성공하면 success를 결과로, 실패하면 error처리
     public void tryRegister(final String id, final String password, final String name, final FirebaseDataSource.DataSourceCallback<String> callback){
         firebaseDataSource.tryRegister(id, password,name,result -> {
             if(result instanceof Result.Success){
@@ -18,6 +19,7 @@ public class UserRepository {
         });
     }
 
+    //로그인 시도 - 성공하면 success결과로 실패하면 error처리
     public void tryLogin(final String id, final String password, final FirebaseDataSource.DataSourceCallback<String> callback){
         firebaseDataSource.tryLogin(id, password, result -> {
             if(result instanceof Result.Success){
@@ -29,6 +31,7 @@ public class UserRepository {
         });
     }
 
+    //쓴 todo문자 보내기 기능 - 성공하면 success, 실패하면 error
     public void sendTodoText(final String date,final String name,final String text, final FirebaseDataSource.DataSourceCallback<String> callback){
         firebaseDataSource.sendTodoText(date, name,text, result->{
             if(result instanceof Result.Success){
@@ -42,6 +45,7 @@ public class UserRepository {
         });
     }
 
+    //이제까지 쓰여진 todolist가져오기
     public void getTodoList(final String date, final UserRepositoryCallback callback){
         firebaseDataSource.getTodoList(date, result -> {
             if(result instanceof Result.Success){
@@ -50,6 +54,7 @@ public class UserRepository {
         });
     }
 
+    //쓴 todo삭제하기 - 성공하면 success, 실패하면 error
     public void deleteTodoText(final String date, final String text, final FirebaseDataSource.DataSourceCallback<String> callback){
         firebaseDataSource.deleteTodoText(date, text, result -> {
             if(result instanceof Result.Success){

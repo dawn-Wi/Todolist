@@ -55,6 +55,7 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        //캘린더 날짜 클릭했을때, 선택한 날짜 setDate에 넣고 해당 날짜 loadTodoList하기
         calendar_cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayofMonth) {
@@ -64,6 +65,8 @@ public class CalendarFragment extends Fragment {
                 mainViewModel.loadTodoList(date);
             }
         });
+
+        // siListLoaded 옵저버, 제대로 되면 todo화면으로 넘어가기
         mainViewModel.isListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean receiveddate) {

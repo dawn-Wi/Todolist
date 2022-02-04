@@ -26,6 +26,7 @@ public class MainViewModel extends ViewModel {
 
     private List<Todo> todoList;
 
+    //로그인 기능 - 일단 doingWork의 값을 true로 변경, 성공시 loggedIn 값을 true로 변경, 이후 doingWork값을 false로 변경
     public void tryLogin(String id,String password){
         doingWork.setValue(true);
         userRepository.tryLogin(id,password,result -> {
@@ -36,6 +37,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
+    //회원가입 기능 - 일단 doingWork의 값을 true로 변경, 성공시 registerSuccess의 값을 true로, 실패하면 false로, 이후 doingWork값을 false로 변경
     public void tryRegister(String id, String password, String name){
         doingWork.setValue(true);
         userRepository.tryRegister(id, password, name, result ->{
@@ -49,6 +51,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
+    //쓴 todo문장 보내기 - 성공시 sendTodoTextSuccess의 값을 true로하고 loadTodoList(date)실행, 실패시 sendTodoTextSuccess의 값을 false로
     public void sendTodoText(String date,String name, String text){
         userRepository.sendTodoText(date,name,text, result->{
             if(result.equals("Success")){
@@ -63,6 +66,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
+    //해당날짜에 적힌 todoList 가져오기 - 성공시 todoList에 getData로 가져온 데아터 저장, listLoaded값 true로 변경, 실패시 listLoaded값 false로
     public void loadTodoList(String date){
         userRepository.getTodoList(date, result->{
             if(result instanceof Result.Success){
@@ -75,6 +79,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
+    //삭제하는 기능 - 성공시 loadTodoList(date) 실행(:리스트 가져오기) & 해당 로그띄우기
     public void deleteTodoText(String date, String text){
         userRepository.deleteTodoText(date, text, result -> {
             if(result.equals("Success")){

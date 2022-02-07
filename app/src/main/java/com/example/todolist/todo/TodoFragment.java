@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class TodoFragment extends Fragment {
     List<Todo> todoList;
     EditText todomain_et_text;
     Button todomain_bt_save;
+    Button todomain_bt_home;
     String calendardate;
     String username;
 
@@ -54,6 +56,7 @@ public class TodoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         todomain_bt_save = view.findViewById(R.id.todomain_bt_save);
         todomain_et_text = view.findViewById(R.id.todomain_et_text);
+        todomain_bt_home = view.findViewById(R.id.todomain_bt_home);
         myFrame = view.findViewById(R.id.todo_fl);
         todoList = mainViewModel.getTodoList();
 
@@ -71,8 +74,13 @@ public class TodoFragment extends Fragment {
         todomain_bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainViewModel.sendTodoText(mainViewModel.getDate(), username, todomain_et_text.getText().toString());
-                mainViewModel.setWriteText(todomain_et_text.getText().toString());
+                if(todomain_et_text.getText().length()<1){
+                    Toast.makeText(getActivity().getApplicationContext(),"try again",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mainViewModel.sendTodoText(mainViewModel.getDate(), username, todomain_et_text.getText().toString());
+                    mainViewModel.setWriteText(todomain_et_text.getText().toString());
+                }
             }
         });
 
@@ -88,6 +96,13 @@ public class TodoFragment extends Fragment {
                 else {
                     Toast.makeText(getActivity().getApplicationContext(),"failed",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        todomain_bt_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TodoFragment.this).navigate(R.id.action_todoFragment_to_calendarFragment);
             }
         });
 

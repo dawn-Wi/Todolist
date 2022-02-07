@@ -25,4 +25,15 @@
         app:layout_constraintLeft_toRightOf="@+id/todomain_et_text"
         android:text="save"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/todomain_bt_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="home"
+        app:layout_constraintTop_toBottomOf="@+id/todomain_bt_save"
+        app:layout_constraintLeft_toRightOf="@+id/todomain_et_text"
+        tools:ignore="MissingConstraints"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

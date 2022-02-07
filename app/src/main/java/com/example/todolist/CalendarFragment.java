@@ -45,15 +45,17 @@ public class CalendarFragment extends Fragment {
 
 
         //calendar_tv_name에다가 userId를 넣고 싶은데 안되는 중
-        mainViewModel.getName().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(s!=null){
-                    displayname = s;
-                    calendar_tv_name.setText(displayname);
-                }
-            }
-        });
+//        mainViewModel.getName().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//                if(s!=null){
+//                    displayname = s;
+//                    calendar_tv_name.setText(displayname);
+//                }
+//            }
+//        });
+
+        calendar_tv_name.setText(mainViewModel.getName());
 
         //캘린더 날짜 클릭했을때, 선택한 날짜 setDate에 넣고 해당 날짜 loadTodoList하기
         calendar_cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -66,12 +68,13 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        // siListLoaded 옵저버, 제대로 되면 todo화면으로 넘어가기
+        // isListLoaded 옵저버, 제대로 되면 todo화면으로 넘어가기
         mainViewModel.isListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean receiveddate) {
                 if(receiveddate==true){
                     NavHostFragment.findNavController(CalendarFragment.this).navigate(R.id.action_calendarFragment_to_todoFragment);
+                    mainViewModel.setListLoaded(false);
                 }
             }
         });

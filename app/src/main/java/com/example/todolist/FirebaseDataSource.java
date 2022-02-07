@@ -58,7 +58,12 @@ public class FirebaseDataSource {
                         if(task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
                             if(document.exists()){
-                                callback.onComplete(new Result.Success<String>("Success"));
+                                if(document.get("Password").equals(password)){
+                                    callback.onComplete(new Result.Success<String>("Success"));
+                                }
+                                else{
+                                    callback.onComplete(new Result.Error(new Exception("Failed")));
+                                }
                             }
                             else {
                                 callback.onComplete(new Result.Error(new Exception("Failed")));

@@ -89,12 +89,13 @@ public class TodoListFragment extends Fragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        mainViewModel.getWriteText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String gettext) {
-                text = gettext;
-            }
-        });
+//        mainViewModel.getWriteText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(String gettext) {
+//                text = gettext;
+//            }
+//        });
+        text= mainViewModel.getWriteText();
 
 
 

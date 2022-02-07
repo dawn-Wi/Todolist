@@ -17,10 +17,10 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
     private MutableLiveData<Boolean> sendTodoTextSuccess = new MutableLiveData<>();
-    private MutableLiveData<String> loggedname = new MutableLiveData<>();
-    private MutableLiveData<Boolean> listChanged = new MutableLiveData<>();
+    private String loggedName;
     private MutableLiveData<Boolean> listLoaded = new MutableLiveData<>(false);
-    private MutableLiveData<String> writeText = new MutableLiveData<>();
+    private String writeText;
+
     private String selectedDate;
     //private String
 
@@ -92,21 +92,19 @@ public class MainViewModel extends ViewModel {
         });
     }
 
-    public LiveData<String> getName(){ return loggedname; }
+    public String getName(){ return loggedName; }
 
     public void setName(String name){
-        loggedname.setValue(name);
+        loggedName=name;
     }
 
     public String getDate() {return selectedDate;}
 
     public void setDate(String date) {selectedDate=date;}
 
-    public LiveData<String> getWriteText() {return writeText;}
+    public String getWriteText() {return writeText;}
 
-    public void setWriteText(String text) {writeText.setValue(text);}
-
-    public LiveData<Boolean> isListChanged() { return listChanged;}
+    public void setWriteText(String text) {writeText=text;}
 
     public List<Todo> getTodoList(){return todoList;}
 
@@ -120,5 +118,8 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Boolean> isListLoaded(){return listLoaded;}
 
+    public void setListLoaded(Boolean value) {listLoaded.setValue(value);}
+
+    public void setRegisterSuccess(Boolean value){registerSuccess.setValue(value);}
 
 }

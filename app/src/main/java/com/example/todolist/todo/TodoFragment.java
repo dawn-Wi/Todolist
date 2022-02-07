@@ -61,14 +61,16 @@ public class TodoFragment extends Fragment {
         todoList = mainViewModel.getTodoList();
 
         //getName 옵저버, 제대로 가져왔으면 username에 저장
-        mainViewModel.getName().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String sendname) {
-                if(sendname!=null){
-                    username=sendname;
-                }
-            }
-        });
+//        mainViewModel.getName().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(String sendname) {
+//                if(sendname!=null){
+//                    username=sendname;
+//                }
+//            }
+//        });
+
+        username=mainViewModel.getName();
 
         //save버튼 클릭시, 날짜, SendTodoText(날짜, 쓰여진 문구)실행, setWriteText(쓰여진 문구) 실행, 텍스트칸 빈칸으로
         todomain_bt_save.setOnClickListener(new View.OnClickListener() {

@@ -135,6 +135,7 @@ public class SignupFragment extends Fragment {
             public void onChanged(Boolean registersuccessing) {
                 if(registersuccessing == true){
                     NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
+                    mainViewModel.setRegisterSuccess(false);
                 }
                 else{
                     Toast.makeText(getActivity().getApplicationContext(),"failed",Toast.LENGTH_SHORT).show();
